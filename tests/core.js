@@ -107,3 +107,16 @@ exports.switchFallThrough = function () {
     assert.eql(JSHINT.errors[1].line, 18);
     assert.eql(JSHINT.errors[1].reason, "Expected a 'break' statement before 'default'.");
 };
+
+exports.wildcardGlobals = function () {
+    var src = fs.readFileSync(__dirname + '/fixtures/wildcardGlobals.js', 'utf8');
+    JSHINT(src);
+    console.log(JSHINT.errors);
+    assert.ok(JSHINT(src));
+
+    var report = JSHINT.data();
+    assert.eql(report.implieds.length, 1);
+    assert.eql(report.implieds[0], 'awkwardFour');
+    assert.eql(report.globals.length, 1);
+    assert.eql(report.globals[0], 'test*');
+};
