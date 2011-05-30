@@ -1941,7 +1941,7 @@ loop:   for (;;) {
 
     function isPoorRelation(node) {
         return node &&
-              ((node.type === '(number)' && +node.value === 0) ||
+              ((node.type === '(number)' && +node.value === 0 && !option.eqnull) ||
                (node.type === '(string)' && node.value === '') ||
                (node.type === 'null' && !option.eqnull) ||
                 node.type === 'true' ||
@@ -2496,7 +2496,7 @@ loop:   for (;;) {
     bitwise('&', 'bitand', 90);
     relation('==', function (left, right) {
         var eqnull = option.eqnull &&
-                (left.value === 'null' || right.value === 'null');
+                (left.value === 'null' || right.value === 'null' || +left.value === 0 || +right.value === 0);
 
         if (!eqnull && option.eqeqeq) {
             warning("Expected '{a}' and instead saw '{b}'.",
