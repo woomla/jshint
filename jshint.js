@@ -2243,7 +2243,9 @@ loop:   for (;;) {
                         nexttoken, '{', nexttoken.value);
 
             noreach = true;
+            indent += option.indent;
             a = [statement()];
+            indent = old_indent;
             noreach = false;
         }
         funct['(verb)'] = null;
